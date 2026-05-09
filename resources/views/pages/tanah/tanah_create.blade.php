@@ -9,10 +9,6 @@
             margin-bottom: 1rem;
         }
 
-        .tanah-form-section:last-child {
-            margin-bottom: 0;
-        }
-
         .tanah-form-section-title {
             background: #0ea5e9;
             color: #fff;
@@ -20,18 +16,51 @@
             font-weight: 600;
         }
 
-        .tanah-form-section-body {
-            padding: 1rem;
+        .tanah-form-section-body .table {
+            margin-bottom: 0;
         }
 
-        .tanah-form-section-body .row {
-            margin-left: 0;
-            margin-right: 0;
-        }
+        /* Mobile Optimization */
+        @media (max-width: 576px) {
+            .tanah-form-section-body .table, 
+            .tanah-form-section-body tbody, 
+            .tanah-form-section-body tr, 
+            .tanah-form-section-body th, 
+            .tanah-form-section-body td {
+                display: block;
+                width: 100% !important;
+                border: 0;
+            }
 
-        .tanah-form-section-body .form-group {
-            padding-left: 0;
-            padding-right: 0;
+            .tanah-form-section-body tr {
+                border-bottom: 1px solid #e3e6f0;
+                padding: .75rem;
+            }
+
+            .tanah-form-section-body tr:last-child {
+                border-bottom: 0;
+            }
+
+            .tanah-form-section-body th {
+                background-color: transparent !important;
+                padding: 0 0 .25rem 0;
+                font-size: .75rem;
+                text-transform: uppercase;
+                color: #4e73df;
+            }
+
+            .tanah-form-section-body td {
+                padding: 0;
+            }
+
+            .d-sm-flex.justify-content-between.mb-4 {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .d-sm-flex.justify-content-between.mb-4 .btn {
+                width: 100%;
+            }
         }
     </style>
 
