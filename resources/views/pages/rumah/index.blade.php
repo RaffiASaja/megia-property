@@ -99,7 +99,7 @@
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Data Tanah</h1>
-        <a href="/tanah/create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+        <a href="{{ url('/tanah/create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fas fa-plus fa-sm text-white-50"></i> Tambah </a>
     </div>
 
@@ -219,6 +219,7 @@
                 if (!row) return;
 
                 var id = row.getAttribute('data-id');
+                var tanahBaseUrl = @json(url('/tanah'));
 
                 setText('dt-kode_tanah', row.getAttribute('data-kode_tanah'));
                 setText('dt-ns', row.getAttribute('data-ns'));
@@ -238,12 +239,12 @@
 
                 var editBtn = document.getElementById('dt-edit-btn');
                 if (editBtn && id) {
-                    editBtn.setAttribute('href', '/tanah/' + id);
+                    editBtn.setAttribute('href', tanahBaseUrl + '/' + id);
                 }
 
                 var deleteForm = document.getElementById('dt-delete-form');
                 if (deleteForm && id) {
-                    deleteForm.setAttribute('action', '/tanah/' + id);
+                    deleteForm.setAttribute('action', tanahBaseUrl + '/' + id);
                 }
 
                 if (window.$ && $('#tanahDetailModal').modal) {
@@ -266,12 +267,12 @@
 
                     var editBtn = document.getElementById('dt-edit-btn');
                     if (editBtn && id) {
-                        editBtn.setAttribute('href', '/tanah/' + id);
+                        editBtn.setAttribute('href', tanahBaseUrl + '/' + id);
                     }
 
                     var deleteForm = document.getElementById('dt-delete-form');
                     if (deleteForm && id) {
-                        deleteForm.setAttribute('action', '/tanah/' + id);
+                        deleteForm.setAttribute('action', tanahBaseUrl + '/' + id);
                     }
 
                     if (window.$ && $('#tanahDetailModal').modal) {
