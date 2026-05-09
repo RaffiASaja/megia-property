@@ -2,7 +2,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/dashboard') }}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -14,7 +14,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="/dashboard">
+                <a class="nav-link" href="{{ url('/dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -30,7 +30,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item {{ request()->is('tanah*') ? 'active' : '' }}">
-                <a class="nav-link" href="/tanah">
+                <a class="nav-link" href="{{ url('/tanah') }}">
                     <i class="fas fa-fw fa-landmark"></i>
                     <span>Tanah</span></a>
             </li>
