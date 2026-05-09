@@ -903,8 +903,8 @@
                             <div class="dashboard-media-grid" data-dashboard-doc-grid style="display:none;"></div>
                             <div class="text-muted" data-dashboard-doc-empty style="display:none;">Tidak ada dokumentasi.</div>
                         </div>
-                        ${pdfUrl ? '<div class="info-item"><span class="info-label">Sertifikat (PDF)</span><span class="info-value"><a href="' + pdfUrl + '" target="_blank" rel="noopener">Lihat Sertifikat</a></span></div>' : ''}
-                        ${t.link_map ? '<div class="info-item"><span class="info-label">Link Map</span><span class="info-value"><a href="' + t.link_map + '" target="_blank" rel="noopener">Buka di Map</a></span></div>' : ''}
+                        ${pdfUrl ? `<div class="info-item"><span class="info-label">Sertifikat (PDF)</span><span class="info-value"><a href="${pdfUrl}" target="_blank" rel="noopener">Lihat Sertifikat</a></span></div>` : ''}
+                        ${t.link_map ? `<div class="info-item"><span class="info-label">Link Map</span><span class="info-value"><a href="${t.link_map}" target="_blank" rel="noopener">Buka di Map</a></span></div>` : ''}
                         <div class="mt-3">
                             <a href="{{ url('/tanah') }}?q=${encodeURIComponent(t.kode_tanah)}&show=${t.id}" class="btn btn-sm btn-primary btn-block">
                                 <i class="fas fa-list mr-1"></i> Lihat Selengkapnya
