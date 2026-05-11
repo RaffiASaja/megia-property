@@ -18,7 +18,31 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'password' => Hash::make('admin123'),
-            ]
+            ],
+        );
+
+        User::updateOrCreate(
+            ['email' => 'raffi@intaran.test'],
+            [
+                'name' => 'Raffi',
+                'password' => Hash::make('password123'),
+            ],
+        );
+
+        User::updateOrCreate(
+            ['email' => 'rayhan@intaran.test'],
+            [
+                'name' => 'Rayhan',
+                'password' => Hash::make('password123'),
+            ],
+        );
+
+        User::updateOrCreate(
+            ['email' => 'staff@intaran.test'],
+            [
+                'name' => 'Staff Megia',
+                'password' => Hash::make('password123'),
+            ],
         );
     }
 }
