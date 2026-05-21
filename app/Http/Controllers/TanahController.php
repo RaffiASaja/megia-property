@@ -179,7 +179,7 @@ class TanahController extends Controller
             'foto.*' => ['file', 'image', 'max:4096'],
             'video' => ['nullable', 'array', 'max:2'],
             'video.*' => ['file', 'mimetypes:video/mp4,video/quicktime,video/x-matroska,video/webm', 'max:51200'],
-            'bukti_sertifikat' => ['nullable', 'file', 'mimetypes:application/pdf', 'max:10240'],
+            'bukti_sertifikat' => ['nullable', 'file', 'mimetypes:application/pdf', 'max:20480'],
         ]);
 
         $validated['polygon'] = $this->parsePolygonText($request->input('polygon_text'));
@@ -257,7 +257,7 @@ class TanahController extends Controller
             'foto.*' => ['file', 'image', 'max:4096'],
             'video' => ['nullable', 'array', 'max:2'],
             'video.*' => ['file', 'mimetypes:video/mp4,video/quicktime,video/x-matroska,video/webm', 'max:51200'],
-            'bukti_sertifikat' => ['nullable', 'file', 'mimetypes:application/pdf', 'max:10240'],
+            'bukti_sertifikat' => ['nullable', 'file', 'mimetypes:application/pdf', 'max:20480'],
         ]);
 
         $validated['polygon'] = $this->parsePolygonText($request->input('polygon_text'));
@@ -311,7 +311,13 @@ class TanahController extends Controller
             $tanah->update($updates);
         }
 
-        return redirect('/tanah?show=' . $id)->with('success', 'berhasil memperbarui data');
+        $page = $request->input('page');
+        $redirectUrl = '/tanah?show=' . $id;
+        if ($page) {
+            $redirectUrl .= '&page=' . $page;
+        }
+
+        return redirect($redirectUrl)->with('success', 'berhasil memperbarui data');
     }
 
     public function destroy($id)

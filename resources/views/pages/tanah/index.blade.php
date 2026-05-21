@@ -114,16 +114,17 @@
                 background: transparent;
                 padding-bottom: 0;
                 padding-top: .25rem;
-                color: #4e73df;
+                color: #525F7F;
                 font-size: .7rem;
                 text-transform: uppercase;
                 letter-spacing: .03em;
+                font-weight: 800;
             }
 
             .tanah-detail-table td {
                 padding-top: .15rem;
                 padding-bottom: .45rem;
-                font-weight: 500;
+                font-weight: 400;
                 color: #3a3b45;
                 font-size: .95rem;
             }
@@ -419,12 +420,13 @@
                                     <th>Kabupaten</th>
                                     <th>Kecamatan</th>
                                     <th>Nama Pemilik</th>
+                                    <th>Luas Tanah</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if (empty($tanahs) || $tanahs->count() === 0)
                                     <tr>
-                                        <td colspan="6" class="text-center">Tidak ada data</td>
+                                        <td colspan="7" class="text-center">Tidak ada data</td>
                                     </tr>
                                 @else
                                     @foreach ($tanahs as $item)
@@ -450,6 +452,7 @@
                                             data-latitude="{{ $item->latitude }}"
                                             data-longitude="{{ $item->longitude }}"
                                             data-status_tanah="{{ $item->status_tanah }}"
+                                            data-link_map="{{ $item->link_map }}"
                                             data-bukti_sertifikat="{{ !empty($item->bukti_sertifikat) ? asset(ltrim((string) $item->bukti_sertifikat, '/')) : '' }}"
                                             data-polygon='@json($item->polygon)'
                                             data-media='@json($mediaPayload)'>
@@ -459,6 +462,7 @@
                                             <td>{{ $item->kabupaten }}</td>
                                             <td>{{ $item->kecamatan }}</td>
                                             <td>{{ $item->name }}</td>
+                                            <td>{{ $item->luas_tanah }}</td>
                                         </tr>
                                     @endforeach
                                 @endif
@@ -509,7 +513,6 @@
                                                 <div class="tanah-mobile-kode">{{ $item->kode_tanah }}</div>
                                                 <div class="tanah-mobile-owner">{{ $item->name }}</div>
                                             </div>
-                                            <div class="tanah-mobile-subtitle">{{ $item->name }}</div>
                                         </div>
 
                                         <div class="tanah-mobile-row">
@@ -521,8 +524,8 @@
                                             <span>{{ $item->kabupaten }}</span>
                                         </div>
                                         <div class="tanah-mobile-row">
-                                            <i class="fas fa-align-left"></i>
-                                            <span>{{ $item->link_map ?? '-' }}</span>
+                                            <i class="fas fa-vector-square"></i>
+                                            <span>{{ $item->luas_tanah }}</span>
                                         </div>
                                     </div>
                                 @endforeach
@@ -889,12 +892,13 @@
                 setText('dt-kode_pos', row.getAttribute('data-kode_pos'));
                 setText('dt-status_tanah', row.getAttribute('data-status_tanah'));
                 var linkMap = row.getAttribute('data-link_map');
-                setText('dt-link_map', linkMap);
                 var linkEl = document.getElementById('dt-link_map');
                 if (linkEl) {
-                    if (linkMap) {
+                    if (linkMap && linkMap !== '-' && linkMap !== '#') {
+                        linkEl.textContent = 'buka google maps';
                         linkEl.setAttribute('href', linkMap);
                     } else {
+                        linkEl.textContent = '-';
                         linkEl.setAttribute('href', '#');
                     }
                 }
@@ -1010,7 +1014,12 @@
 
                 var editBtn = document.getElementById('dt-edit-btn');
                 if (editBtn && id) {
-                    editBtn.setAttribute('href', tanahBaseUrl + '/' + id);
+                    var editUrl = tanahBaseUrl + '/' + id + '/edit';
+                    var urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.has('page')) {
+                        editUrl += '?page=' + urlParams.get('page');
+                    }
+                    editBtn.setAttribute('href', editUrl);
                 }
 
                 var deleteForm = document.getElementById('dt-delete-form');

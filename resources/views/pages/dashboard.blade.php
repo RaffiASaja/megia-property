@@ -2,6 +2,122 @@
 
 @section('content')
     <style>
+        .dash-card {
+            border-radius: 12px;
+            padding: 20px 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 125px;
+        }
+
+        .dash-card .card-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+            z-index: 2;
+            letter-spacing: 0.02em;
+        }
+
+        .dash-card .card-subtitle {
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            z-index: 2;
+        }
+
+        .dash-card .card-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1;
+            z-index: 2;
+            margin-top: auto;
+        }
+
+        .dash-card .card-icon {
+            position: absolute;
+            bottom: 5px;
+            right: 15px;
+            font-size: 4rem;
+            z-index: 1;
+        }
+
+        .dash-card-blue {
+            background: linear-gradient(135deg, #1b2845 0%, #274060 100%);
+            color: #fff;
+        }
+
+        .dash-card-blue .card-title {
+            color: #f8fafc;
+        }
+
+        .dash-card-blue .card-number {
+            color: #d4af37;
+        }
+
+        .dash-card-blue .card-icon {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .dash-card-green {
+            background: linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 100%);
+            color: #064e3b;
+        }
+
+        .dash-card-green .card-title,
+        .dash-card-green .card-subtitle {
+            color: #064e3b;
+        }
+
+        .dash-card-green .card-number {
+            color: #022c22;
+        }
+
+        .dash-card-green .card-icon {
+            color: rgba(0, 0, 0, 0.2);
+        }
+
+        .dash-card-orange {
+            background: linear-gradient(135deg, #fde68a 0%, #fcd34d 100%);
+            color: #78350f;
+        }
+
+        .dash-card-orange .card-title,
+        .dash-card-orange .card-subtitle {
+            color: #78350f;
+        }
+
+        .dash-card-orange .card-number {
+            color: #451a03;
+        }
+
+        .dash-card-orange .card-icon {
+            color: rgba(0, 0, 0, 0.15);
+        }
+
+        .dash-card-red {
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+            color: #7f1d1d;
+        }
+
+        .dash-card-red .card-title,
+        .dash-card-red .card-subtitle {
+            color: #7f1d1d;
+        }
+
+        .dash-card-red .card-number {
+            color: #450a0a;
+        }
+
+        .dash-card-red .card-icon {
+            color: rgba(0, 0, 0, 0.15);
+        }
+
         @media (max-width: 768px) {
             .dashboard-stats-row {
                 flex-wrap: nowrap;
@@ -13,7 +129,7 @@
                 margin-right: 0;
             }
 
-            .dashboard-stats-row > [class^="col-"] {
+            .dashboard-stats-row>[class^="col-"] {
                 flex: 0 0 78%;
                 max-width: 78%;
                 padding-left: 0;
@@ -25,9 +141,8 @@
                 display: none;
             }
 
-            .dashboard-stats-row .card {
-                border: 0 !important;
-                box-shadow: none !important;
+            .leaflet-control-zoom {
+                display: none !important;
             }
         }
 
@@ -144,7 +259,7 @@
             background: rgba(255, 255, 255, 0.95);
             z-index: 1000;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             display: none;
             flex-direction: column;
             overflow: hidden;
@@ -200,8 +315,8 @@
         }
 
         .info-label {
-            font-weight: 700;
-            color: #4e73df;
+            font-weight: 800;
+            color: #525F7F;
             display: block;
             margin-bottom: 2px;
             text-transform: uppercase;
@@ -258,7 +373,7 @@
         .dashboard-image-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,.9);
+            background: rgba(0, 0, 0, .9);
             z-index: 30050;
             display: none;
             align-items: center;
@@ -282,7 +397,7 @@
             top: 10px;
             right: 12px;
             border: none;
-            background: rgba(255,255,255,.12);
+            background: rgba(255, 255, 255, .12);
             color: #fff;
             width: 42px;
             height: 42px;
@@ -303,7 +418,7 @@
 
         .dashboard-image-toolbtn {
             border: none;
-            background: rgba(255,255,255,.15);
+            background: rgba(255, 255, 255, .15);
             color: #fff;
             width: 44px;
             height: 44px;
@@ -325,74 +440,46 @@
         }
     </style>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
     </div>
 
-    <div class="row dashboard-stats-row">
+    <div class="row dashboard-stats-row mb-4">
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Tanah</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalTanah ?? 0 }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-fw fa-landmark fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
+            <div class="dash-card dash-card-blue">
+                <div class="card-title">TOTAL TANAH</div>
+                <div class="card-number">{{ $totalTanah ?? 0 }}</div>
+                <i class="fas fa-landmark card-icon"></i>
             </div>
         </div>
 
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Tanah Aktif</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $tanahAktif ?? 0 }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
+            <div class="dash-card dash-card-green">
+                <div class="card-title">STATUS DISTRIBUSI</div>
+                <div class="card-subtitle">TANAH AKTIF</div>
+                <div class="card-number">{{ $tanahAktif ?? 0 }}</div>
+                <i class="fas fa-check-circle card-icon"></i>
             </div>
         </div>
 
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Tanah Sengketa</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $tanahSengketa ?? 0 }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
+            <div class="dash-card dash-card-orange">
+                <div class="card-title">STATUS DISTRIBUSI</div>
+                <div class="card-subtitle">SENGKETA</div>
+                <div class="card-number">{{ $tanahSengketa ?? 0 }}</div>
+                <i class="fas fa-exclamation-triangle card-icon"></i>
             </div>
         </div>
 
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Tanah Dijual</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $tanahDijual ?? 0 }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-tags fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
+            <div class="dash-card dash-card-red">
+                <div class="card-title">STATUS DISTRIBUSI</div>
+                <div class="card-subtitle">DIJUAL</div>
+                <div class="card-number">{{ $tanahDijual ?? 0 }}</div>
+                <i class="fas fa-tags card-icon"></i>
             </div>
         </div>
     </div>
@@ -405,15 +492,22 @@
                 </div>
                 <div class="card-body">
                     <div class="dashboard-map-wrap">
-                        <button type="button" class="dashboard-map-fullscreen-btn" id="mapFullscreenOpen" aria-label="Perbesar Peta">
+                        <button type="button" class="dashboard-map-fullscreen-btn" id="mapFullscreenOpen"
+                            aria-label="Perbesar Peta">
                             <i class="fas fa-expand"></i>
                         </button>
-                        
+
                         <!-- Side Info Panel -->
                         <div id="mapSideInfo" class="map-side-info">
                             <div class="map-side-info-header">
-                                <h6 id="info-title">Detail Lokasi</h6>
-                                <button type="button" class="map-side-info-close" onclick="closeSideInfo()">&times;</button>
+                                <h6 id="info-title" class="m-0 font-weight-bold">Detail Lokasi</h6>
+                                <div>
+                                    <button type="button" class="map-side-info-close mr-3 d-md-none"
+                                        onclick="toggleSideInfo(this)" aria-label="Minimize"><i class="fas fa-minus"
+                                            style="font-size: 16px;"></i></button>
+                                    <button type="button" class="map-side-info-close" onclick="closeSideInfo()"
+                                        aria-label="Tutup">&times;</button>
+                                </div>
                             </div>
                             <div class="map-side-info-body">
                                 <div class="info-item">
@@ -504,14 +598,17 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <div class="dashboard-map-fullscreen" id="mapFullscreen" aria-hidden="true">
-        <button type="button" class="dashboard-map-fullscreen-close" id="mapFullscreenClose" aria-label="Tutup">×</button>
+        <button type="button" class="dashboard-map-fullscreen-close" id="mapFullscreenClose"
+            aria-label="Tutup">×</button>
         <div class="dashboard-map-fullscreen-tools">
             <form method="GET" action="{{ url()->current() }}" class="dashboard-map-fullscreen-search">
                 <div class="input-group">
-                    <input type="text" name="q" value="{{ request('q') }}" class="form-control" placeholder="Cari kode tanah..." aria-label="Search">
+                    <input type="text" name="q" value="{{ request('q') }}" class="form-control"
+                        placeholder="Cari kode tanah..." aria-label="Search">
                     <input type="hidden" name="f[provinsi]" value="{{ request('f.provinsi') }}">
                     <input type="hidden" name="f[kabupaten]" value="{{ request('f.kabupaten') }}">
                     <input type="hidden" name="f[kecamatan]" value="{{ request('f.kecamatan') }}">
@@ -519,10 +616,10 @@
                     <input type="hidden" name="f[name]" value="{{ request('f.name') }}">
                     <input type="hidden" name="f[ns]" value="{{ request('f.ns') }}">
                     <input type="hidden" name="f[kode_pos]" value="{{ request('f.kode_pos') }}">
-                    @foreach((array) request('f.jenis_sertifikat', []) as $v)
+                    @foreach ((array) request('f.jenis_sertifikat', []) as $v)
                         <input type="hidden" name="f[jenis_sertifikat][]" value="{{ $v }}">
                     @endforeach
-                    @foreach((array) request('f.status_tanah', []) as $v)
+                    @foreach ((array) request('f.status_tanah', []) as $v)
                         <input type="hidden" name="f[status_tanah][]" value="{{ $v }}">
                     @endforeach
                     <div class="input-group-append">
@@ -533,7 +630,8 @@
                 </div>
             </form>
 
-            <button type="button" class="dashboard-map-fullscreen-filter-btn" id="mapFullscreenFilter" aria-label="Filter">
+            <button type="button" class="dashboard-map-fullscreen-filter-btn" id="mapFullscreenFilter"
+                aria-label="Filter">
                 <i class="fas fa-filter"></i>
             </button>
         </div>
@@ -551,7 +649,8 @@
                 </div>
                 <div class="modal-body">
                     <div id="dashboardDokumentasiGrid" class="dashboard-media-grid"></div>
-                    <div id="dashboardDokumentasiEmpty" class="text-muted" style="display:none;">Tidak ada dokumentasi.</div>
+                    <div id="dashboardDokumentasiEmpty" class="text-muted" style="display:none;">Tidak ada dokumentasi.
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -561,7 +660,7 @@
     </div>
 
     <script>
-        (function () {
+        (function() {
             if (!window.L) return;
 
             var el = document.getElementById('tanahMap');
@@ -588,6 +687,25 @@
                 document.getElementById('mapSideInfo').classList.remove('is-open');
                 document.getElementById('mapSideInfoFullscreen').classList.remove('is-open');
                 clearActivePolygon();
+            };
+
+            window.toggleSideInfo = function(btn) {
+                var isFullscreen = document.getElementById('mapFullscreen').classList.contains('is-open');
+                var infoPanel = isFullscreen ? document.getElementById('mapSideInfoFullscreen') : document
+                    .getElementById('mapSideInfo');
+
+                if (!infoPanel) return;
+
+                var body = infoPanel.querySelector('.map-side-info-body');
+                if (body) {
+                    if (body.style.display === 'none') {
+                        body.style.display = 'block';
+                        btn.innerHTML = '<i class="fas fa-minus" style="font-size: 16px;"></i>';
+                    } else {
+                        body.style.display = 'none';
+                        btn.innerHTML = '<i class="fas fa-plus" style="font-size: 16px;"></i>';
+                    }
+                }
             };
 
             var docViewer = null;
@@ -644,7 +762,8 @@
 
                 function applyTransform() {
                     if (!docViewerImg) return;
-                    docViewerImg.style.transform = 'translate(' + docViewerTx + 'px, ' + docViewerTy + 'px) scale(' + docViewerScale + ')';
+                    docViewerImg.style.transform = 'translate(' + docViewerTx + 'px, ' + docViewerTy + 'px) scale(' +
+                        docViewerScale + ')';
                     docViewerImg.style.transformOrigin = 'center center';
                     docViewerImg.style.cursor = docViewerScale > 1 ? (docIsPanning ? 'grabbing' : 'grab') : 'default';
                 }
@@ -673,12 +792,14 @@
                 docViewer.__open = openViewer;
                 docViewer.__close = closeViewer;
 
-                closeBtn.addEventListener('click', function () { closeViewer(); });
-                docViewer.addEventListener('click', function (e) {
+                closeBtn.addEventListener('click', function() {
+                    closeViewer();
+                });
+                docViewer.addEventListener('click', function(e) {
                     if (e.target === docViewer) closeViewer();
                 });
 
-                docViewerImg.addEventListener('pointerdown', function (e) {
+                docViewerImg.addEventListener('pointerdown', function(e) {
                     if (!docViewer || !docViewer.classList.contains('is-open')) return;
                     if (docViewerScale <= 1) return;
                     if (docActivePointerId !== null) return;
@@ -689,12 +810,14 @@
                     docPanStartY = e.clientY;
                     docPanStartTx = docViewerTx;
                     docPanStartTy = docViewerTy;
-                    try { docViewerImg.setPointerCapture(docActivePointerId); } catch (err) { }
+                    try {
+                        docViewerImg.setPointerCapture(docActivePointerId);
+                    } catch (err) {}
                     applyTransform();
                     e.preventDefault();
                 });
 
-                docViewerImg.addEventListener('pointermove', function (e) {
+                docViewerImg.addEventListener('pointermove', function(e) {
                     if (!docIsPanning) return;
                     if (docActivePointerId !== e.pointerId) return;
                     docViewerTx = docPanStartTx + (e.clientX - docPanStartX);
@@ -705,7 +828,8 @@
 
                 function endPan(e) {
                     if (!docIsPanning) return;
-                    if (docActivePointerId !== null && e && e.pointerId !== undefined && e.pointerId !== docActivePointerId) return;
+                    if (docActivePointerId !== null && e && e.pointerId !== undefined && e.pointerId !==
+                        docActivePointerId) return;
                     docIsPanning = false;
                     docActivePointerId = null;
                     applyTransform();
@@ -714,12 +838,12 @@
                 docViewerImg.addEventListener('pointerup', endPan);
                 docViewerImg.addEventListener('pointercancel', endPan);
 
-                zoomIn.addEventListener('click', function () {
+                zoomIn.addEventListener('click', function() {
                     docViewerScale = Math.min(5, +(docViewerScale + 0.25).toFixed(2));
                     applyTransform();
                 });
 
-                zoomOut.addEventListener('click', function () {
+                zoomOut.addEventListener('click', function() {
                     docViewerScale = Math.max(1, +(docViewerScale - 0.25).toFixed(2));
                     if (docViewerScale === 1) {
                         docViewerTx = 0;
@@ -728,7 +852,7 @@
                     applyTransform();
                 });
 
-                document.addEventListener('keydown', function (e) {
+                document.addEventListener('keydown', function(e) {
                     if (!docViewer || !docViewer.classList.contains('is-open')) return;
                     if (e.key === 'Escape') {
                         closeViewer();
@@ -785,7 +909,7 @@
                     img.className = 'dashboard-media-thumb';
                     img.src = src;
                     img.alt = 'Dokumentasi';
-                    img.addEventListener('click', function (ev) {
+                    img.addEventListener('click', function(ev) {
                         ev.preventDefault();
                         ensureDocImageViewer();
                         if (docViewer && docViewer.__open) {
@@ -811,12 +935,12 @@
                     grid.appendChild(item);
                 }
 
-                fotos.forEach(function (src) {
+                fotos.forEach(function(src) {
                     var url = toPublicUrl(src);
                     if (url) appendImage(url);
                 });
 
-                videos.forEach(function (src) {
+                videos.forEach(function(src) {
                     var url = toPublicUrl(src);
                     if (url) appendVideo(url);
                 });
@@ -825,10 +949,12 @@
             function showSideInfo(t) {
                 const isFullscreen = document.getElementById('mapFullscreen').classList.contains('is-open');
                 lastSelectedTanah = t || null;
-                const infoPanel = isFullscreen ? document.getElementById('mapSideInfoFullscreen') : document.getElementById('mapSideInfo');
-                var hasDocs = normalizeMediaArray(t && t.foto).length > 0 || normalizeMediaArray(t && t.video).length > 0;
+                const infoPanel = isFullscreen ? document.getElementById('mapSideInfoFullscreen') : document
+                    .getElementById('mapSideInfo');
+                var hasDocs = normalizeMediaArray(t && t.foto).length > 0 || normalizeMediaArray(t && t.video).length >
+                    0;
                 var pdfUrl = toPublicUrl(t && t.bukti_sertifikat);
-                
+
                 // Pastikan panel yang tidak aktif tertutup
                 if (isFullscreen) {
                     document.getElementById('mapSideInfo').classList.remove('is-open');
@@ -838,8 +964,11 @@
 
                 infoPanel.innerHTML = `
                     <div class="map-side-info-header">
-                        <h6>Detail Lokasi</h6>
-                        <button type="button" class="map-side-info-close" onclick="closeSideInfo()">&times;</button>
+                        <h6 class="m-0 font-weight-bold">Detail Lokasi</h6>
+                        <div>
+                            <button type="button" class="map-side-info-close mr-3 d-md-none" onclick="toggleSideInfo(this)" aria-label="Minimize"><i class="fas fa-minus" style="font-size: 16px;"></i></button>
+                            <button type="button" class="map-side-info-close" onclick="closeSideInfo()" aria-label="Tutup">&times;</button>
+                        </div>
                     </div>
                     <div class="map-side-info-body">
                         <div class="info-item">
@@ -912,7 +1041,7 @@
                         </div>
                     </div>
                 `;
-                
+
                 infoPanel.classList.add('is-open');
                 showPolygon(t.polygon);
                 renderDokumentasi(infoPanel, t);
@@ -943,7 +1072,7 @@
 
                 clearActivePolygon();
                 activePolygonLayer = L.geoJSON(geo, {
-                    style: function () {
+                    style: function() {
                         return {
                             color: '#2563eb',
                             weight: 3,
@@ -956,12 +1085,14 @@
 
                 var polyBounds = activePolygonLayer.getBounds && activePolygonLayer.getBounds();
                 if (polyBounds && polyBounds.isValid && polyBounds.isValid()) {
-                    map.fitBounds(polyBounds, { padding: [20, 20] });
+                    map.fitBounds(polyBounds, {
+                        padding: [20, 20]
+                    });
                 }
             }
 
             var markerByKode = {};
-            locations.forEach(function (t) {
+            locations.forEach(function(t) {
                 var lat = Number(t.latitude);
                 var lng = Number(t.longitude);
                 if (!isFinite(lat) || !isFinite(lng)) return;
@@ -970,11 +1101,13 @@
 
                 var title = (t.kode_tanah || '-') + ' - ' + (t.name || '-');
                 var place = [t.kabupaten, t.provinsi].filter(Boolean).join(', ');
-                var link = t.link_map ? '<div class="mt-2"><a href="' + t.link_map + '" target="_blank" rel="noopener">Buka Link Map</a></div>' : '';
+                var link = t.link_map ? '<div class="mt-2"><a href="' + t.link_map +
+                    '" target="_blank" rel="noopener">Buka Link Map</a></div>' : '';
 
                 var marker = L.marker([lat, lng]).addTo(map)
-                    .bindPopup('<div style="font-weight:800;">' + title + '</div>' + (place ? ('<div>' + place + '</div>') : '') + link)
-                    .on('click', function () {
+                    .bindPopup('<div style="font-weight:800;">' + title + '</div>' + (place ? ('<div>' + place +
+                        '</div>') : '') + link)
+                    .on('click', function() {
                         lastSelectedTanah = t;
                         if (fullscreen && fullscreen.classList.contains('is-open')) {
                             showSideInfo(t);
@@ -984,7 +1117,10 @@
                     });
 
                 if (t.kode_tanah) {
-                    markerByKode[String(t.kode_tanah).toLowerCase()] = { marker: marker, data: t };
+                    markerByKode[String(t.kode_tanah).toLowerCase()] = {
+                        marker: marker,
+                        data: t
+                    };
                 }
             });
 
@@ -993,7 +1129,9 @@
                 return;
             }
 
-            map.fitBounds(bounds, { padding: [20, 20] });
+            map.fitBounds(bounds, {
+                padding: [20, 20]
+            });
 
             var q = @json($q ?? '');
             if (q) {
@@ -1026,7 +1164,7 @@
                 fullscreen.setAttribute('aria-hidden', 'false');
                 document.body.style.overflow = 'hidden';
                 fullscreen.appendChild(el);
-                setTimeout(function () {
+                setTimeout(function() {
                     map.invalidateSize(true);
                     if (lastSelectedTanah) {
                         showSideInfo(lastSelectedTanah);
@@ -1045,18 +1183,20 @@
                 } else {
                     originalParent.appendChild(el);
                 }
-                setTimeout(function () { map.invalidateSize(true); }, 50);
+                setTimeout(function() {
+                    map.invalidateSize(true);
+                }, 50);
             }
 
             if (openBtn) {
-                openBtn.addEventListener('click', function (e) {
+                openBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     openFullscreen();
                 });
             }
 
             if (closeBtn) {
-                closeBtn.addEventListener('click', function (e) {
+                closeBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     closeFullscreen();
                 });
@@ -1064,7 +1204,7 @@
 
             var filterBtn = document.getElementById('mapFullscreenFilter');
             if (filterBtn) {
-                filterBtn.addEventListener('click', function (e) {
+                filterBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (window.openFilterDrawer) {
                         window.openFilterDrawer();
@@ -1072,7 +1212,7 @@
                 });
             }
 
-            document.addEventListener('keydown', function (e) {
+            document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && fullscreen && fullscreen.classList.contains('is-open')) {
                     closeFullscreen();
                 }

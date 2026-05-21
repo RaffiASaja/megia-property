@@ -12,17 +12,7 @@ class DashboardController extends Controller
         $q = trim((string) $request->query('q', ''));
         $f = (array) $request->query('f', []);
 
-        $total = Tanah::count();
-        $aktif = Tanah::where('status_tanah', 'aktif')->count();
-        $sengketa = Tanah::where('status_tanah', 'sengketa')->count();
-        $dijual = Tanah::where('status_tanah', 'dijual')->count();
-
-        $latest = Tanah::latest()->take(5)->get();
-
-        $locations = Tanah::query()
-            ->select(['id', 'kode_tanah', 'ns', 'name', 'luas_tanah', 'jenis_sertifikat', 'status_tanah', 'tanggal_terbit', 'masa_berlaku', 'alamat', 'provinsi', 'kabupaten', 'kecamatan', 'desa', 'kode_pos', 'latitude', 'longitude', 'link_map', 'polygon', 'bukti_sertifikat', 'foto', 'video'])
-            ->whereNotNull('latitude')
-            ->whereNotNull('longitude')
+        $baseQuery = Tanah::query()
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($sub) use ($q) {
                     $sub->where('kode_tanah', 'like', '%' . $q . '%')
@@ -50,10 +40,11 @@ class DashboardController extends Controller
             ->when(!empty($f['kode_pos']), function ($query) use ($f) {
                 $query->where('kode_pos', 'like', '%' . $f['kode_pos'] . '%');
             })
-            ->when(!empty($f['jenis_sertifikat']) && is_array($f['jenis_sertifikat']), function ($query) use ($f) {
-                $vals = array_values(array_filter($f['jenis_sertifikat'], fn($v) => $v !== null && $v !== ''));
-                if (!empty($vals)) {
-                    $query->whereIn('jenis_sertifikat', $vals);
+            ->when(!empty($f['jenis_sertifikat']), function ($query) use ($f) {
+                $val = is_array($f['jenis_sertifikat']) ? (string) ($f['jenis_sertifikat'][0] ?? '') : (string) $f['jenis_sertifikat'];
+                $val = trim($val);
+                if ($val !== '') {
+                    $query->where('jenis_sertifikat', $val);
                 }
             })
             ->when(!empty($f['status_tanah']) && is_array($f['status_tanah']), function ($query) use ($f) {
@@ -61,7 +52,19 @@ class DashboardController extends Controller
                 if (!empty($vals)) {
                     $query->whereIn('status_tanah', $vals);
                 }
-            })
+            });
+
+        $total = (clone $baseQuery)->count();
+        $aktif = (clone $baseQuery)->where('status_tanah', 'aktif')->count();
+        $sengketa = (clone $baseQuery)->where('status_tanah', 'sengketa')->count();
+        $dijual = (clone $baseQuery)->where('status_tanah', 'dijual')->count();
+
+        $latest = (clone $baseQuery)->latest()->take(5)->get();
+
+        $locations = (clone $baseQuery)
+            ->select(['id', 'kode_tanah', 'ns', 'name', 'luas_tanah', 'jenis_sertifikat', 'status_tanah', 'tanggal_terbit', 'masa_berlaku', 'alamat', 'provinsi', 'kabupaten', 'kecamatan', 'desa', 'kode_pos', 'latitude', 'longitude', 'link_map', 'polygon', 'bukti_sertifikat', 'foto', 'video'])
+            ->whereNotNull('latitude')
+            ->whereNotNull('longitude')
             ->get();
 
         return view('pages.dashboard', [

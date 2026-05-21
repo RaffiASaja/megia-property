@@ -78,6 +78,9 @@
                     <form method="POST" action="{{ url('/tanah/'.$tanah->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
+                        @if(request()->has('page'))
+                            <input type="hidden" name="page" value="{{ request()->query('page') }}">
+                        @endif
 
                         @php
                             $polygonText = old('polygon_text');
